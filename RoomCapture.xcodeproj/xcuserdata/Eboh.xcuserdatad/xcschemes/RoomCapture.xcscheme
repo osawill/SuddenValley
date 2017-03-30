@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2AFC8D73176F966000F7F3B5"
-               BuildableName = "RoomCapture.app"
+               BuildableName = "Scannotate.app"
                BlueprintName = "RoomCapture"
                ReferencedContainer = "container:RoomCapture.xcodeproj">
             </BuildableReference>
@@ -33,7 +33,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2AFC8D73176F966000F7F3B5"
-            BuildableName = "RoomCapture.app"
+            BuildableName = "Scannotate.app"
             BlueprintName = "RoomCapture"
             ReferencedContainer = "container:RoomCapture.xcodeproj">
          </BuildableReference>
@@ -56,7 +56,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2AFC8D73176F966000F7F3B5"
-            BuildableName = "RoomCapture.app"
+            BuildableName = "Scannotate.app"
             BlueprintName = "RoomCapture"
             ReferencedContainer = "container:RoomCapture.xcodeproj">
          </BuildableReference>
@@ -75,7 +75,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2AFC8D73176F966000F7F3B5"
-            BuildableName = "RoomCapture.app"
+            BuildableName = "Scannotate.app"
             BlueprintName = "RoomCapture"
             ReferencedContainer = "container:RoomCapture.xcodeproj">
          </BuildableReference>

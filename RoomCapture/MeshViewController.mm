@@ -135,6 +135,7 @@ enum MeasurementState {
         [self.view addSubview:_translationJoystick.view];
         
         [self.measurementButton applyCustomStyleWithBackgroundColor:blueButtonColorWithAlpha];
+        [self.saveButton applyCustomStyleWithBackgroundColor:redButtonColorWithAlpha];
         [self.measurementGuideLabel applyCustomStyleWithBackgroundColor:blackLabelColorWithLightAlpha];
         
         _rulerText = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 40)];
@@ -632,6 +633,17 @@ enum MeasurementState {
         [self enterMeasurementState:Measurement_Point1];
     else if(_measurementState == Measurement_Done)
         [self enterMeasurementState:Measurement_Clear];
+}
+
+- (IBAction)saveButtonClicked:(id)sender
+{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Done"
+                                                    message:@"Your scene was saved!"
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil];
+    [alert show];
+    //[alert release];
 }
 
 - (void)enterMeasurementState:(MeasurementState)state
