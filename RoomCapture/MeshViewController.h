@@ -17,7 +17,7 @@
 - (void)meshViewDidRequestHoleFilling;
 @end
 
-@interface MeshViewController : UIViewController <UIGestureRecognizerDelegate, MFMailComposeViewControllerDelegate>
+@interface MeshViewController : UIViewController <UIGestureRecognizerDelegate, MFMailComposeViewControllerDelegate, UIActionSheetDelegate, UIAlertViewDelegate>
 
 @property (nonatomic, assign) id<MeshViewDelegate> delegate;
 

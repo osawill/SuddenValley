@@ -83,6 +83,7 @@ enum MeasurementState {
     UILabel *_rulerText;
     UIImageView * _circle1;
     UIImageView * _circle2;
+    UIImageView * _circle3;
     
     MeasurementState _measurementState;
     GLKVector3 _pt1;
@@ -147,16 +148,20 @@ enum MeasurementState {
         
         _circle1 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"innerCircle.png"]];
         _circle2 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"innerCircle.png"]];
+        _circle3 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"innerCircle.png"]];
         
         CGRect frame = _circle1.frame;
         frame.size = CGSizeMake(50, 50);
         _circle1.frame = frame;
         _circle2.frame = frame;
+        _circle3.frame = frame;
         
         [self.view addSubview:_circle1];
         [self.view addSubview:_circle2];
+        [self.view addSubview:_circle3];
         [self.view sendSubviewToBack:_circle1];
         [self.view sendSubviewToBack:_circle2];
+        [self.view sendSubviewToBack:_circle3];
         
     }
     
@@ -637,14 +642,58 @@ enum MeasurementState {
 
 - (IBAction)saveButtonClicked:(id)sender
 {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Done"
-                                                    message:@"Your scene was saved!"
-                                                   delegate:nil
-                                          cancelButtonTitle:@"OK"
-                                          otherButtonTitles:nil];
-    [alert show];
+    /* Pop-up
+     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Done"
+     message:@"Your scene was saved!"
+     delegate:nil
+     cancelButtonTitle:@"OK"
+     otherButtonTitles:nil];
+     [alert show];
+     */
+    
+    
+    /*
+     UIAlertController* alert = [UIAlertController
+     alertControllerWithTitle:nil      //  Must be "nil", otherwise a blank title area will appear above our two buttons
+     message:nil
+     preferredStyle:UIAlertControllerStyleActionSheet];
+     
+     [self presentViewController:alert animated:YES completion:nil];
+     */
+    
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil
+                                                             delegate:self
+                                                    cancelButtonTitle:@"Cancel"
+                                               destructiveButtonTitle:@"Cancel"
+                                                    otherButtonTitles:@"Text Notes", @"Voice Note", @"Photo & Video", nil];
+    [actionSheet showInView:self.view];
     //[alert release];
 }
+
+
+-(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
+    
+    if (buttonIndex == 1)
+    {
+        /*
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Done"
+                                                        message:@"Your pressed 1!"
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+        */
+        
+        UIAlertView *myView = [[UIAlertView alloc]initWithTitle:@"Text Note" message:@"Enter your annotation" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK", nil];
+        myView.alertViewStyle = UIAlertViewStylePlainTextInput;
+        [myView textFieldAtIndex:0].delegate = nil;
+        [myView show];
+    }
+    
+    
+    NSLog(@"Index = %ld - Title = %@", (long)buttonIndex, [actionSheet buttonTitleAtIndex:buttonIndex]);
+}
+
 
 - (void)enterMeasurementState:(MeasurementState)state
 {
