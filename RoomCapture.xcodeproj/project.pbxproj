@@ -61,7 +61,6 @@
 /* Begin PBXFileReference section */
 		1F52A1A01ACA3146004205DD /* Structure.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Structure.framework; path = ../Frameworks/Structure.framework; sourceTree = "<group>"; };
 		2A0BA3E318500398008FBE2E /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
-		2A35A00E1975B89700D8C0B1 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = RoomCapture/AppDelegate.h; sourceTree = SOURCE_ROOT; };
 		2A35A00F1975B89700D8C0B1 /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = RoomCapture/AppDelegate.mm; sourceTree = SOURCE_ROOT; };
 		2A35A0131975B89F00D8C0B1 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ViewController.h; path = RoomCapture/ViewController.h; sourceTree = SOURCE_ROOT; };
 		2A35A0141975B89F00D8C0B1 /* ViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ViewController.mm; path = RoomCapture/ViewController.mm; sourceTree = SOURCE_ROOT; };
@@ -222,7 +221,6 @@
 			children = (
 				7EAD26A9198B015000638C9C /* CustomUIKitStyles.h */,
 				7E2288C8198FE3D300F6E3B2 /* CustomUIKitStyles.mm */,
-				2A35A00E1975B89700D8C0B1 /* AppDelegate.h */,
 				2A35A00F1975B89700D8C0B1 /* AppDelegate.mm */,
 				2A35A0131975B89F00D8C0B1 /* ViewController.h */,
 				2A35A0141975B89F00D8C0B1 /* ViewController.mm */,

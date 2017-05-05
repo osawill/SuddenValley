@@ -63,7 +63,8 @@ enum MeasurementState {
     Measurement_Clear,
     Measurement_Point1,
     Measurement_Point2,
-    Measurement_Done
+    Measurement_Done,
+    Annotation
 };
 
 @interface MeshViewController ()
@@ -86,8 +87,10 @@ enum MeasurementState {
     UIImageView * _circle3;
     
     MeasurementState _measurementState;
+    bool annotatePoint;
     GLKVector3 _pt1;
     GLKVector3 _pt2;
+    GLKVector3 _pt3;
 }
 
 @property STMesh *meshRef;
@@ -108,6 +111,8 @@ enum MeasurementState {
     _graphicsRenderer = 0;
     _viewpointController = 0;
     
+    annotatePoint = false;
+    
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self)
     {
@@ -118,14 +123,14 @@ enum MeasurementState {
         
         self.navigationItem.leftBarButtonItem = backButton;
         
-        UIBarButtonItem *emailButton = [[UIBarButtonItem alloc] initWithTitle:@"Email"
+        UIBarButtonItem *emailButton = [[UIBarButtonItem alloc] initWithTitle:@"Share" //@"Email"
                                                                         style:UIBarButtonItemStylePlain
                                                                        target:self
                                                                        action:@selector(emailMesh)];
         self.navigationItem.rightBarButtonItem = emailButton;
         
         
-        self.title = @"Structure Sensor Room Capture";
+        self.title = @"Scannotate Room Capture";
         
         // Initialize Joystick.
         const float joystickFrameSize = self.view.frame.size.height * 0.4;
@@ -136,7 +141,7 @@ enum MeasurementState {
         [self.view addSubview:_translationJoystick.view];
         
         [self.measurementButton applyCustomStyleWithBackgroundColor:blueButtonColorWithAlpha];
-        [self.saveButton applyCustomStyleWithBackgroundColor:redButtonColorWithAlpha];
+        [self.annotateButton applyCustomStyleWithBackgroundColor:redButtonColorWithAlpha];
         [self.measurementGuideLabel applyCustomStyleWithBackgroundColor:blackLabelColorWithLightAlpha];
         
         _rulerText = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 40)];
@@ -155,6 +160,12 @@ enum MeasurementState {
         _circle1.frame = frame;
         _circle2.frame = frame;
         _circle3.frame = frame;
+        
+        //Progmatically add touch function to note marker
+        UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showAnnotateText)];
+        singleTap.numberOfTapsRequired = 1;
+        [_circle3 setUserInteractionEnabled:YES];
+        [_circle3 addGestureRecognizer:singleTap];
         
         [self.view addSubview:_circle1];
         [self.view addSubview:_circle2];
@@ -565,7 +576,18 @@ enum MeasurementState {
     
     _meshRenderer->clear();
     _meshRenderer->render(currentProjection, currentModelView);
-
+    
+    if (annotatePoint)
+    {
+        GLKVector2 onScreenPt3;
+        bool pt3OnScreen = [self point3dToScreenPoint:_pt3 screenPt:onScreenPt3];
+        
+        if (pt3OnScreen)
+            [self updateViewWith2DPosition:_circle3 onScreenPt:onScreenPt3];
+        else
+            _circle3.hidden = false;
+    }
+    
     if (_measurementState == Measurement_Point2 || _measurementState == Measurement_Done)
     {
         GLKVector2 onScreenPt1;
@@ -640,7 +662,7 @@ enum MeasurementState {
         [self enterMeasurementState:Measurement_Clear];
 }
 
-- (IBAction)saveButtonClicked:(id)sender
+- (IBAction)annotateButtonClicked:(id)sender
 {
     /* Pop-up
      UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Done"
@@ -660,16 +682,45 @@ enum MeasurementState {
      
      [self presentViewController:alert animated:YES completion:nil];
      */
+    [self enterMeasurementState:Annotation];
     
+    
+    /*UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil
+                                                             delegate:self
+                                                    cancelButtonTitle:@"Cancel"
+                                               destructiveButtonTitle:@"Cancel"
+                                                    otherButtonTitles:@"Text Notes", @"Voice Note", @"Photo & Video", nil];
+    [actionSheet showInView:self.view];*/
+    //[alert release];
+}
+
+- (void) showAnnotateText
+{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Text @ point 1"
+                                                    message:@"Your scene was saved!"
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil];
+    [alert show];
+}
+
+- (void) showAnnotate
+{
+    _circle3.hidden = false;
+    [self enterMeasurementState:Measurement_Clear];
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil
                                                              delegate:self
                                                     cancelButtonTitle:@"Cancel"
                                                destructiveButtonTitle:@"Cancel"
                                                     otherButtonTitles:@"Text Notes", @"Voice Note", @"Photo & Video", nil];
+    [self hideMeshViewerMessage:self.measurementGuideLabel];
     [actionSheet showInView:self.view];
-    //[alert release];
 }
 
+- (IBAction)testButtonClicked:(id)sender
+{
+    self.pointOnMap.hidden = !self.pointOnMap.hidden;
+}
 
 -(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
     
@@ -742,6 +793,12 @@ enum MeasurementState {
                 _rulerText.text = [NSString stringWithFormat:@"%.1f cm", distance*100];
             _circle2.hidden = false;
             [self hideMeshViewerMessage:self.measurementGuideLabel];
+        }
+            break;
+        case Annotation:
+        {
+            annotatePoint = true;
+            [self showMeshViewerMessage:self.measurementGuideLabel msg:@"Tap to place annotation point."];
         }
             break;
         default:
@@ -855,9 +912,10 @@ enum MeasurementState {
 }
 
 // measurement control
+// Tap to add point
 - (void)singleTapGesture:(UITapGestureRecognizer *)gestureRecognizer
 {
-    if (_measurementState != Measurement_Point1 && _measurementState != Measurement_Point2) {
+    if (_measurementState != Measurement_Point1 && _measurementState != Measurement_Point2 && _measurementState != Annotation) {
         return;
     }
     
@@ -886,6 +944,12 @@ enum MeasurementState {
             {
                 _pt1 = intersection;
                 [self enterMeasurementState:Measurement_Point2];
+            }
+            else if (_measurementState == Annotation)
+            {
+                _pt3 = intersection;
+                [self showAnnotate];
+                //[self enterMeasurementState:Measurement_Clear];
             }
             else
             {

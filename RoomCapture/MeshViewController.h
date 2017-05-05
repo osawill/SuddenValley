@@ -30,10 +30,14 @@
 @property (weak, nonatomic) IBOutlet UISwitch *XRaySwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *holeFillingSwitch;
 @property (weak, nonatomic) IBOutlet UIButton *measurementButton;
-@property (weak, nonatomic) IBOutlet UIButton *saveButton;
+@property (weak, nonatomic) IBOutlet UIButton *annotateButton;
+@property (weak, nonatomic) IBOutlet UIButton *testButton;
+@property (weak, nonatomic) IBOutlet UILabel *pointOnMap;
+
 
 - (IBAction)measurementButtonClicked:(id)sender;
-- (IBAction)saveButtonClicked:(id)sender;
+- (IBAction)annotateButtonClicked:(id)sender;
+- (IBAction)testButtonClicked:(id)sender;
 
 - (IBAction)topViewSwitchChanged:(id)sender;
 - (IBAction)holeFillingSwitchChanged:(id)sender;
