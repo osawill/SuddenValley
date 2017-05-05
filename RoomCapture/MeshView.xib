@@ -17,8 +17,6 @@
                 <outlet property="measurementButton" destination="Xwx-eH-SMU" id="3pR-Wy-D8t"/>
                 <outlet property="measurementGuideLabel" destination="u2V-eU-Ewv" id="GeS-ix-mmO"/>
                 <outlet property="meshViewerMessageLabel" destination="ALi-cg-XD4" id="hK4-AW-hSA"/>
-                <outlet property="pointOnMap" destination="BYH-Ie-09H" id="vVn-qJ-pGi"/>
-                <outlet property="testButton" destination="Ret-n7-r8b" id="tno-9x-Bu1"/>
                 <outlet property="topViewSwitch" destination="LTT-MY-4vH" id="hYa-z1-gHV"/>
                 <outlet property="view" destination="1" id="L7f-Ij-c22"/>
             </connections>
@@ -29,7 +27,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view alpha="0.19999999999999968" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="izm-aA-Dln">
-                    <rect key="frame" x="74" y="81" width="821" height="59"/>
+                    <rect key="frame" x="74" y="81" width="754" height="59"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <userDefinedRuntimeAttributes>
@@ -115,23 +113,6 @@
                         <action selector="annotateButtonClicked:" destination="-1" eventType="touchUpInside" id="pph-e9-9Ue"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ret-n7-r8b">
-                    <rect key="frame" x="821" y="96" width="46" height="30"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <state key="normal" title="Test">
-                        <color key="titleColor" red="1" green="0.2173512984" blue="0.26755237720000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    </state>
-                    <connections>
-                        <action selector="testButtonClicked:" destination="-1" eventType="touchUpInside" id="M7B-rv-Hbx"/>
-                    </connections>
-                </button>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Point on Map" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BYH-Ie-09H">
-                    <rect key="frame" x="325" y="491" width="86" height="48"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" red="1" green="0.19765821080000001" blue="0.020386303309999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    <nil key="highlightedColor"/>
-                </label>
             </subviews>
             <color key="backgroundColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>

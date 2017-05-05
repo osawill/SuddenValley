@@ -88,6 +88,7 @@ enum MeasurementState {
     
     MeasurementState _measurementState;
     bool annotatePoint;
+    NSString *annotateText;
     GLKVector3 _pt1;
     GLKVector3 _pt2;
     GLKVector3 _pt3;
@@ -153,7 +154,7 @@ enum MeasurementState {
         
         _circle1 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"innerCircle.png"]];
         _circle2 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"innerCircle.png"]];
-        _circle3 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"innerCircle.png"]];
+        _circle3 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"note.png"]];
         
         CGRect frame = _circle1.frame;
         frame.size = CGSizeMake(50, 50);
@@ -684,20 +685,12 @@ enum MeasurementState {
      */
     [self enterMeasurementState:Annotation];
     
-    
-    /*UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil
-                                                             delegate:self
-                                                    cancelButtonTitle:@"Cancel"
-                                               destructiveButtonTitle:@"Cancel"
-                                                    otherButtonTitles:@"Text Notes", @"Voice Note", @"Photo & Video", nil];
-    [actionSheet showInView:self.view];*/
-    //[alert release];
 }
 
 - (void) showAnnotateText
 {
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Text @ point 1"
-                                                    message:@"Your scene was saved!"
+                                                    message:annotateText
                                                    delegate:nil
                                           cancelButtonTitle:@"OK"
                                           otherButtonTitles:nil];
@@ -706,7 +699,7 @@ enum MeasurementState {
 
 - (void) showAnnotate
 {
-    _circle3.hidden = false;
+    
     [self enterMeasurementState:Measurement_Clear];
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil
                                                              delegate:self
@@ -715,11 +708,6 @@ enum MeasurementState {
                                                     otherButtonTitles:@"Text Notes", @"Voice Note", @"Photo & Video", nil];
     [self hideMeshViewerMessage:self.measurementGuideLabel];
     [actionSheet showInView:self.view];
-}
-
-- (IBAction)testButtonClicked:(id)sender
-{
-    self.pointOnMap.hidden = !self.pointOnMap.hidden;
 }
 
 -(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
@@ -734,6 +722,7 @@ enum MeasurementState {
                                               otherButtonTitles:nil];
         [alert show];
         */
+        annotatePoint = true;
         
         UIAlertView *myView = [[UIAlertView alloc]initWithTitle:@"Text Note" message:@"Enter your annotation" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK", nil];
         myView.alertViewStyle = UIAlertViewStylePlainTextInput;
@@ -743,6 +732,15 @@ enum MeasurementState {
     
     
     NSLog(@"Index = %ld - Title = %@", (long)buttonIndex, [actionSheet buttonTitleAtIndex:buttonIndex]);
+}
+
+-(void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
+    if(buttonIndex == alertView.cancelButtonIndex) {
+        return;
+    }
+    
+    annotateText = [alertView textFieldAtIndex:0].text;
+    
 }
 
 
@@ -797,7 +795,9 @@ enum MeasurementState {
             break;
         case Annotation:
         {
-            annotatePoint = true;
+            //Hide point for now
+            annotatePoint = false;
+            _circle3.hidden = true;
             [self showMeshViewerMessage:self.measurementGuideLabel msg:@"Tap to place annotation point."];
         }
             break;
